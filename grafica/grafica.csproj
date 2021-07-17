@@ -33,8 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTK.3.1.0\lib\net20\OpenTK.dll</HintPath>
+    <Reference Include="Json.Net, Version=1.0.33.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Json.Net.1.0.33\lib\netstandard2.0\Json.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=3.3.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.3.3.1\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.GLControl, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK.GLControl.3.1.0\lib\net20\OpenTK.GLControl.dll</HintPath>
@@ -52,8 +58,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controller\AnimationController.cs" />
     <Compile Include="controller\ControllerGame.cs" />
     <Compile Include="controller\EventKeyController.cs" />
+    <Compile Include="objetos\model\Accion.cs" />
+    <Compile Include="objetos\model\Libreto.cs" />
+    <Compile Include="objetos\utils\json\JsonSerialize.cs" />
+    <Compile Include="objetos\utils\Metodos.cs" />
     <Compile Include="objetos\utils\Resource.cs" />
     <Compile Include="objetos\utils\Shader.cs" />
     <Compile Include="vista\Form1.cs">
@@ -67,8 +78,8 @@
     <Compile Include="objetos\model\Mesa.cs" />
     <Compile Include="objetos\model\Parte.cs" />
     <Compile Include="objetos\model\Silla.cs" />
-    <Compile Include="objetos\utils\Figura.cs" />
-    <Compile Include="objetos\utils\InterfaceFigura.cs" />
+    <Compile Include="objetos\model\Figura.cs" />
+    <Compile Include="objetos\utils\interface\InterfaceFigura.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="vista\Form1.resx">
@@ -83,6 +94,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="assets\libreto1.json" />
+    <None Include="objetos\utils\shader\shader.frag" />
     <None Include="objetos\utils\shader\shader.vert" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
@@ -98,6 +111,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

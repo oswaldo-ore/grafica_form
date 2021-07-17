@@ -6,26 +6,31 @@ using OpenTK.Graphics.OpenGL;
 using System.Collections;
 using KeyPressEventArgs = System.Windows.Forms.KeyPressEventArgs;
 using grafica.controller;
+using grafica.objetos.utils;
 
 namespace grafica
 {
     public partial class Form1 : Form
     {
         Escenario escenario = new Escenario(100, 100, 200);
+        AnimationController animation;
         private Timer _timer = null!;
         Figura select = null;
         float tx = 0, ty = 0, tz = 0,e=1,angleX=0,angleY=0,angleZ=0;
-        private EventKeyController press = new EventKeyController();
+        private Shader shader;
 
 
         public Form1()
         {
-            escenario.add("silla", new Silla(15, 30, 15, new Vector3(30, 30, -50)));
-            escenario.add("mesa", new Mesa(30, 20, 30, new Vector3(30, 20, -100)));
+            escenario.add("silla", new Silla(15, 30, 15, new Vector3(5, 5, 10)));
+            escenario.add("mesa", new Mesa(30, 20, 30, new Vector3(5, 5, 10)));
             select = escenario;
+            
             InitializeComponent();
             cargarObjetos();
             cargarPartes();
+            animation = new AnimationController(escenario);
+            animation.play();
         }
 
         private void cargarObjetos()
@@ -69,6 +74,10 @@ namespace grafica
             GL.ClearColor(0.3f, 0.2f, 0.3f, 1.0f);
             glControl1.Resize += glControl1_Resize;
             glControl1.Paint += glControl1_Paint;
+            
+            shader = new Shader("../../objetos/utils/shader/shader.vert", "../../objetos/utils/shader/shader.frag");
+            shader.Use();
+            escenario.cargarRecursos(shader);
 
             _timer = new Timer();
             _timer.Tick += (sender, e) =>
@@ -78,6 +87,7 @@ namespace grafica
             _timer.Interval = 50;
             _timer.Start();
             glControl1_Resize(glControl1, EventArgs.Empty);
+
         }
 
         private void glControl1_Resize(object sender, EventArgs e)
@@ -100,14 +110,14 @@ namespace grafica
         private void Render()
         {
             glControl1.MakeCurrent();
-            GL.LoadIdentity();
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            escenario.paint();
+            shader.Use();
+            escenario.paint(shader);
+            animation.play();
             glControl1.SwapBuffers();
         }
 
         private void glControl1_KeyPress(object sender, KeyPressEventArgs e)
-
         {
             char letra = e.KeyChar;
             if (verificarTecla(letra))

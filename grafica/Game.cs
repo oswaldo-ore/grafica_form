@@ -36,7 +36,7 @@ namespace grafica
             GL.LoadIdentity();
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             drawPoint(0,0,-1);
-            es1.paint();
+            //es1.paint();
             dibujarplano();
             Context.SwapBuffers();
             base.OnRenderFrame(e);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using grafica.objetos.utils;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -12,9 +13,17 @@ namespace grafica.objetos
         public Dictionary<String,Figura> partesObjeto = new Dictionary<String, Figura>();
         public float angulo=0;
         public Vector3 centroMasa = new Vector3(0,0,0);
-        public Vector3 vRotate = new Vector3(0,0,0);
-        public Vector3 vEscala = new Vector3(1,1,1);
-        public Vector3 vTrasladar = new Vector3(0,0,0);
+        public Matrix4 vRotate = Matrix4.Identity;
+        public Matrix4 vEscala = Matrix4.CreateScale(new Vector3(1,1,1));
+        public Matrix4 vTrasladar = Matrix4.CreateTranslation(new Vector3(0,0,0));
+
+        public virtual void cargarRecursos(Shader shader)
+        {
+            foreach (var partes in partesObjeto)
+            {
+                partes.Value.cargarRecursos(shader);
+            }
+        }
 
         public virtual void escalar(float escalar)
         {
@@ -24,11 +33,11 @@ namespace grafica.objetos
             }
         }
 
-        public virtual void paint()
+        public virtual void paint(Shader shader)
         {   
             foreach (var partes in partesObjeto)
             {   
-                partes.Value.paint();
+                partes.Value.paint(shader);
             }
         }
 
